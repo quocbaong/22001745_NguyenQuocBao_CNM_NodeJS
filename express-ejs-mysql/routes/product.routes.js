@@ -2,11 +2,32 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/mysql');
 
-// Home
+// HOME + SEARCH
 router.get('/', async(req, res) => {
-    const [rows] = await db.query('SELECT * FROM products');
-    res.render('products', { products: rows });
+    try {
+        const keyword = req.query.q || '';
+        let rows;
+
+        if (keyword) {
+            const [result] = await db.query(
+                'SELECT * FROM products WHERE name LIKE ?', [`%${keyword}%`]
+            );
+            rows = result;
+        } else {
+            const [result] = await db.query('SELECT * FROM products');
+            rows = result;
+        }
+
+        res.render('products', {
+            products: rows,
+            keyword: keyword
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Load products failed');
+    }
 });
+
 
 // Add product
 router.post('/add', async(req, res) => {
@@ -68,3 +89,5 @@ router.post('/edit/:id', async(req, res) => {
         res.status(500).send('Update failed');
     }
 });
+
+module.exports = router;
