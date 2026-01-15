@@ -18,3 +18,17 @@ router.post('/add', async(req, res) => {
 });
 
 module.exports = router;
+
+//Delete product
+router.post('/delete/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        await db.query(
+            'DELETE FROM products WHERE id = ?', [id]
+        );
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Delete failed');
+    }
+})

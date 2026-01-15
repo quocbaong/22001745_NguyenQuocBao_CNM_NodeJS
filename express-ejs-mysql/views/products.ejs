@@ -36,6 +36,11 @@
                 <td>
                     <%= p.quantity %>
                 </td>
+                <td>
+                    <form action="/delete/<%= p.id %>" method="post" onsubmit="return confirm('Delete this product?')">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
             <% }) %>
     </table>
