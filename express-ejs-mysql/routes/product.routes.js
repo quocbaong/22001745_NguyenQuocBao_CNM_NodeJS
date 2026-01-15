@@ -32,3 +32,39 @@ router.post('/delete/:id', async(req, res) => {
         res.status(500).send('Delete failed');
     }
 })
+
+// Show edit form
+router.get('/edit/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const [rows] = await db.query(
+            'SELECT * FROM products WHERE id = ?', [id]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).send('Product not found');
+        }
+
+        res.render('edit', { product: rows[0] });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Load edit form failed');
+    }
+});
+
+// Update product
+router.post('/edit/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, price, quantity } = req.body;
+
+        await db.query(
+            'UPDATE products SET name = ?, price = ?, quantity = ? WHERE id = ?', [name, price, quantity, id]
+        );
+
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Update failed');
+    }
+});

@@ -37,6 +37,7 @@
                     <%= p.quantity %>
                 </td>
                 <td>
+                    <a href="/edit/<%= p.id %>">Edit</a>
                     <form action="/delete/<%= p.id %>" method="post" onsubmit="return confirm('Delete this product?')">
                         <button type="submit">Delete</button>
                     </form>
