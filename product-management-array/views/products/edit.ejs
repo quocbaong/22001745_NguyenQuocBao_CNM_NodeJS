@@ -3,29 +3,128 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chỉnh sửa sản phẩm</title>
-    <link rel="stylesheet" href="/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa sản phẩm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .form-card h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+        }
+        
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-cancel:hover {
+            background: #5a6268;
+            color: white;
+        }
+        
+        .product-image-preview {
+            max-width: 200px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">📦 Product Management</a>
+            <a href="/logout" class="btn btn-light btn-sm">Đăng xuất</a>
+        </div>
+    </nav>
 
-    <h2>Chỉnh sửa sản phẩm</h2>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-card">
+                    <h1>✏️ Sửa sản phẩm</h1>
 
-    <form method="post" action="/edit/<%= product.id %>">
-        <label>Tên sản phẩm</label><br>
-        <input name="name" value="<%= product.name %>" required><br><br>
+                    <form method="POST" action="/edit/<%= product.id %>" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">📝 Tên sản phẩm</label>
+                            <input type="text" class="form-control form-control-lg" id="name" name="name" value="<%= product.name %>" required>
+                        </div>
 
-        <label>Giá</label><br>
-        <input name="price" type="number" value="<%= product.price %>" required><br><br>
+                        <div class="mb-3">
+                            <label for="categoryId" class="form-label">📂 Danh mục</label>
+                            <select class="form-select form-select-lg" id="categoryId" name="categoryId" required>
+                                <option value="">-- Chọn danh mục --</option>
+                                <% categories.forEach(cat => { %>
+                                    <option value="<%= cat.categoryId %>" <%= product.categoryId === cat.categoryId ? 'selected' : '' %>>
+                                        <%= cat.name %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
 
-        <label>Số lượng</label><br>
-        <input name="quantity" type="number" value="<%= product.quantity %>" required><br><br>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">💰 Giá (₫)</label>
+                                <input type="number" class="form-control form-control-lg" id="price" name="price" value="<%= product.price %>" required min="0">
+                            </div>
 
-        <button type="submit">Cập nhật</button>
-    </form>
+                            <div class="col-md-6 mb-3">
+                                <label for="quantity" class="form-label">📊 Số lượng</label>
+                                <input type="number" class="form-control form-control-lg" id="quantity" name="quantity" value="<%= product.quantity %>" required min="0">
+                            </div>
+                        </div>
 
-    <a href="/">⬅ Quay lại</a>
+                        <div class="mb-3">
+                            <% if (product.url_image) { %>
+                                <div class="mb-3">
+                                    <label class="form-label">📷 Ảnh hiện tại</label><br>
+                                    <img src="/uploads/<%= product.url_image %>" alt="<%= product.name %>" class="product-image-preview">
+                                </div>
+                                <% } %>
 
+                                    <label for="image" class="form-label">🖼️ Cập nhật ảnh (tùy chọn)</label>
+                                    <input type="file" class="form-control form-control-lg" id="image" name="image" accept="image/*">
+                                    <small class="text-muted">Để trống nếu không muốn đổi ảnh</small>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-submit btn-lg flex-grow-1">💾 Cập nhật</button>
+                            <a href="/" class="btn btn-cancel btn-lg">Hủy</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa danh mục</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .form-card h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+        }
+        
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-cancel:hover {
+            background: #5a6268;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">📦 Product Management</a>
+            <a href="/logout" class="btn btn-light btn-sm">Đăng xuất</a>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-card">
+                    <h1>✏️ Sửa danh mục</h1>
+
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <%= error %>
+                        </div>
+                        <% } %>
+
+                            <form method="POST" action="/categories/edit/<%= category.categoryId %>">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">📝 Tên danh mục</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="<%= category.name %>" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">📄 Mô tả</label>
+                                    <textarea class="form-control" id="description" name="description" rows="4"><%= category.description %></textarea>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-submit btn-lg flex-grow-1">Lưu thay đổi</button>
+                                    <a href="/categories" class="btn btn-cancel btn-lg">Hủy</a>
+                                </div>
+                            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

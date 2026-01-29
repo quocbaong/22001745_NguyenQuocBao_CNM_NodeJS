@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý danh mục</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .nav-link {
+            color: white !important;
+            margin: 0 10px;
+        }
+        
+        .nav-link:hover {
+            opacity: 0.8;
+        }
+        
+        .category-card {
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-group-sm {
+            gap: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">📦 Product Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/categories">Danh mục</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link">👤 <%= user.username %> (<%= user.role %>)</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1>📂 Quản lý danh mục</h1>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="/categories/add" class="btn btn-success btn-lg">
+                    ➕ Thêm danh mục mới
+                </a>
+            </div>
+        </div>
+
+        <% if (categories.length === 0) { %>
+            <div class="alert alert-info" role="alert">
+                ℹ️ Chưa có danh mục nào. <a href="/categories/add">Tạo danh mục đầu tiên</a>
+            </div>
+            <% } else { %>
+                <div class="row">
+                    <% categories.forEach(category => { %>
+                        <div class="col-md-6 mb-4">
+                            <div class="card category-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">📋
+                                        <%= category.name %>
+                                    </h5>
+                                    <p class="card-text text-muted">
+                                        <%= category.description %>
+                                    </p>
+                                    <p class="card-text">
+                                        <small>📅 <%= new Date(category.createdAt).toLocaleDateString('vi-VN') %></small>
+                                    </p>
+                                    <div class="btn-group-sm d-flex gap-2">
+                                        <a href="/categories/edit/<%= category.categoryId %>" class="btn btn-warning btn-sm">✏️ Sửa</a>
+                                        <a href="/categories/delete/<%= category.categoryId %>" class="btn btn-danger btn-sm" onclick="return confirm('Xác nhận xoá danh mục này?')">🗑️ Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
