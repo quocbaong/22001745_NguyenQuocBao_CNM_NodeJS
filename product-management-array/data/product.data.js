@@ -1,5 +1,4 @@
-let products = [
-    {
+let products = [{
         id: "prod-001",
         name: "iPhone 15 Pro",
         price: 25000000,
