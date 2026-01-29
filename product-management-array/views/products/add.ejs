@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sản phẩm</title>
+</head>
+
+<body>
+
+    <h2>Thêm sản phẩm</h2>
+
+    <form method="post" action="/add" enctype="multipart/form-data">
+        <label>Tên</label><br>
+        <input name="name" required><br><br>
+
+        <label>Giá</label><br>
+        <input type="number" name="price" required><br><br>
+
+        <label>Số lượng</label><br>
+        <input type="number" name="quantity" required><br><br>
+
+        <label>Hình ảnh</label><br>
+        <input type="file" name="image"><br><br>
+
+        <button type="submit">Lưu</button>
+    </form>
+
+    <a href="/">⬅ Quay lại</a>
+
+</body>
+
+</html>
