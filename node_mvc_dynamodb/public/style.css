@@ -1,0 +1,12 @@
+:root{
+	--primary:#0d6efd;
+	--muted:#6c757d;
+}
+body{ font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f6f8fa; padding:24px }
+.card{ border:0 }
+.navbar-brand{ font-weight:600 }
+.img-thumbnail{ background:#fff }
+.table td, .table th{ vertical-align:middle }
+.table-hover tbody tr:hover{ background:#f1f5f9 }
+.btn-outline-secondary{ border-color: #ced4da }
+
