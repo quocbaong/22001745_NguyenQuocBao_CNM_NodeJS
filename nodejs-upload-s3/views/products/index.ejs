@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Product List</h1>
+        <a href="/products/create" class="btn btn-primary create-link">Create New Product</a>
+        <div class="products-grid">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name"><%= product.name %></div>
+                        <div class="product-price">$<%= product.price %></div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
