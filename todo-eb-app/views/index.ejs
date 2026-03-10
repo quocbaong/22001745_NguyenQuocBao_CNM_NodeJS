@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo App</title>
+</head>
+
+<body>
+
+<h1>Todo List</h1>
+
+<form method="POST" action="/add">
+<input name="title" placeholder="New todo">
+<button>Add</button>
+</form>
+
+<ul>
+<% todos.forEach(todo => { %>
+<li><%= todo.title %></li>
+<% }) %>
+</ul>
+
+</body>
+</html>
