@@ -68,7 +68,7 @@ exports.showAdd = (req, res) => {
 
 exports.addProduct = async(req, res) => {
     try {
-        const imageUrl = req.file ? .location || ""
+        const imageUrl = req.file ? req.file.location : null
 
         const product = {
             ID: uuidv4(),
