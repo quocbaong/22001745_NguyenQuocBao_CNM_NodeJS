@@ -1,0 +1,68 @@
+<%- include('partials/header') %>
+
+    <section class="card">
+        <% if (success) { %>
+            <div class="notification success">
+                <%= success %>
+            </div>
+            <% } %>
+                <% if (error) { %>
+                    <div class="notification error">
+                        <%= error %>
+                    </div>
+                    <% } %>
+
+                        <h1 class="heading">Danh sách sản phẩm</h1>
+
+                        <form action="/" method="GET" class="search-form">
+                            <input type="text" name="search" value="<%= search || '' %>" placeholder="Tìm kiếm sản phẩm..." />
+                            <button type="submit">Tìm</button>
+                        </form>
+
+                        <% if (!products || products.length === 0) { %>
+                            <p style="text-align:center; font-style: italic;">Chưa có sản phẩm nào. Hãy thêm sản phẩm mới.</p>
+                            <% } else { %>
+                                <div class="table-wrapper">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Ảnh</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% products.forEach((p, idx) => { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= idx + 1 %>
+                                                    </td>
+                                                    <td><img class="table-image" src="<%= p.url_image %>" alt="<%= p.name %>" /></td>
+                                                    <td>
+                                                        <%= p.name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= p.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %>
+                                                    </td>
+                                                    <td>
+                                                        <%= p.unit_in_stock %>
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn--secondary" href="/detail/<%= p.id %>">Xem</a>
+                                                        <a class="btn btn--secondary" href="/edit/<%= p.id %>">Sửa</a>
+                                                        <a class="btn btn--danger" href="/delete/<%= p.id %>" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">Xóa</a>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <% } %>
+    </section>
+    </main>
+    </body>
+
+    </html>

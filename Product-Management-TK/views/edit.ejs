@@ -1,0 +1,65 @@
+<%- include('partials/header') %>
+
+    <section class="card">
+        <h1 class="heading">Sửa sản phẩm</h1>
+
+        <form action="/edit/<%= product.id %>" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Tên sản phẩm</label>
+                    <input id="name" type="text" name="name" value="<%= product.name %>" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Giá (VNĐ)</label>
+                    <input id="price" type="number" name="price" value="<%= product.price %>" step="1000" min="0" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="unit_in_stock">Số lượng tồn kho</label>
+                    <input id="unit_in_stock" type="number" name="unit_in_stock" value="<%= product.unit_in_stock %>" min="0" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Ảnh hiện tại</label>
+                    <img class="image-preview" src="<%= product.url_image %>" alt="Ảnh hiện tại" />
+                </div>
+
+                <div class="form-group">
+                    <label for="image_new">Ảnh mới (nếu muốn thay đổi)</label>
+                    <input id="image_new" type="file" name="image" accept="image/*" />
+                    <input type="hidden" name="old_image" value="<%= product.url_image %>" />
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; text-align: center;">
+                <button class="btn" type="submit">Cập nhật</button>
+                <a class="btn btn--secondary" href="/">Hủy</a>
+            </div>
+        </form>
+    </section>
+    </main>
+    </body>
+    <script>
+        function validateForm() {
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                alert('Tên sản phẩm không được để trống');
+                return false;
+            }
+            const price = parseFloat(document.getElementById('price').value);
+            if (isNaN(price) || price <= 0) {
+                alert('Giá phải là số dương');
+                return false;
+            }
+            const stock = parseInt(document.getElementById('unit_in_stock').value);
+            if (isNaN(stock) || stock < 0) {
+                alert('Số lượng phải là số không âm');
+                return false;
+            }
+            // For edit, image is optional
+            return true;
+        }
+    </script>
+
+    </html>
