@@ -1,0 +1,58 @@
+<%- include('partials/header') %>
+
+<div class="card" style="max-width: 800px; margin: 0 auto;">
+    <h1 class="heading">Chi tiết vé sự kiện</h1>
+    
+    <div style="display: flex; gap: 2rem; align-items: flex-start;">
+        <div style="flex: 1;">
+            <img src="<%= ticket.imageUrl || 'https://via.placeholder.com/300' %>" alt="QR" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        </div>
+        <div style="flex: 1.5;">
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                <span class="badge badge-<%= ticket.category.toLowerCase() %>"><%= ticket.category %></span>
+                <span class="badge" style="background: #e2e8f0; color: #475569;"><%= ticket.status %></span>
+            </div>
+            
+            <h2 style="margin: 0 0 1rem; color: #1e293b;"><%= ticket.eventName %></h2>
+            
+            <table class="table" style="margin-top: 0;">
+                <tr>
+                    <td style="border: none; padding: 0.5rem 0; width: 140px; color: #64748b;">Người sở hữu:</td>
+                    <td style="border: none; padding: 0.5rem 0;"><strong><%= ticket.holderName %></strong></td>
+                </tr>
+                <tr>
+                    <td style="border: none; padding: 0.5rem 0; color: #64748b;">Ngày diễn ra:</td>
+                    <td style="border: none; padding: 0.5rem 0;"><strong><%= new Date(ticket.eventDate).toLocaleDateString('vi-VN') %></strong></td>
+                </tr>
+                <tr>
+                    <td style="border: none; padding: 0.5rem 0; color: #64748b;">Số lượng:</td>
+                    <td style="border: none; padding: 0.5rem 0;"><strong><%= ticket.quantity %> vé</strong></td>
+                </tr>
+                <tr>
+                    <td style="border: none; padding: 0.5rem 0; color: #64748b;">Đơn giá:</td>
+                    <td style="border: none; padding: 0.5rem 0;"><strong>$<%= parseFloat(ticket.pricePerTicket).toFixed(2) %></strong></td>
+                </tr>
+            </table>
+
+            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 1.5rem 0;">
+
+            <div style="text-align: right;">
+                <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Tổng số tiền thanh toán:</p>
+                <p style="margin: 0.25rem 0; font-size: 2.25rem; font-weight: 800; color: #3b82f6;">
+                    $<%= ticket.finalAmount.toFixed(2) %>
+                </p>
+                <% if (ticket.isDiscounted) { %>
+                    <span style="background: #d1fae5; color: #065f46; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">ĐÃ ÁP DỤNG GIẢM GIÁ</span>
+                <% } %>
+            </div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <a href="/" class="btn btn-secondary" style="flex: 1; text-align: center;">Quay lại</a>
+                <a href="/edit/<%= ticket.ticketId %>" class="btn btn-warning" style="flex: 1; text-align: center;">Chỉnh sửa</a>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+</body>
+</html>

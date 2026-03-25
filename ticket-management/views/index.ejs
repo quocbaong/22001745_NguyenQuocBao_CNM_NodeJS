@@ -1,0 +1,67 @@
+<%- include('partials/header') %>
+
+<div class="card">
+    <h1 class="heading">Danh sách vé sự kiện</h1>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <form action="/" method="GET" class="search-form" style="margin-bottom: 0;">
+            <input type="text" name="search" value="<%= search || '' %>" placeholder="Tìm tên sự kiện/người mua...">
+            <select name="status">
+                <option value="">Tất cả trạng thái</option>
+                <option value="Upcoming" <%= status === 'Upcoming' ? 'selected' : '' %>>Upcoming</option>
+                <option value="Sold" <%= status === 'Sold' ? 'selected' : '' %>>Sold</option>
+                <option value="Cancelled" <%= status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Tìm</button>
+        </form>
+    </div>
+
+    <% if (!tickets || tickets.length === 0) { %>
+        <p style="text-align: center; font-style: italic; color: #64748b;">Không tìm thấy vé nào phù hợp.</p>
+    <% } else { %>
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Sự kiện</th>
+                        <th>Người sở hữu</th>
+                        <th>Loại</th>
+                        <th>Giá</th>
+                        <th>Thành tiền</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% tickets.forEach(ticket => { %>
+                        <tr>
+                            <td>
+                                <img src="<%= ticket.imageUrl || 'https://via.placeholder.com/60' %>" class="table-image" alt="QR">
+                            </td>
+                            <td><strong><%= ticket.eventName %></strong><br><small><%= ticket.status %></small></td>
+                            <td><%= ticket.holderName %></td>
+                            <td><span class="badge badge-<%= ticket.category.toLowerCase() %>"><%= ticket.category %></span></td>
+                            <td>$<%= parseFloat(ticket.pricePerTicket).toFixed(2) %> x <%= ticket.quantity %></td>
+                            <td>
+                                <strong>$<%= ticket.finalAmount.toFixed(2) %></strong>
+                                <% if (ticket.isDiscounted) { %>
+                                    <br><small style="color: #059669;">(Giảm giá)</small>
+                                <% } %>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <a href="/detail/<%= ticket.ticketId %>" class="btn btn-secondary">Xem</a>
+                                <a href="/edit/<%= ticket.ticketId %>" class="btn btn-warning">Sửa</a>
+                                <form action="/delete/<%= ticket.ticketId %>" method="POST" style="display: inline;" onsubmit="return confirm('Xác nhận xóa?')">
+                                    <button type="submit" class="btn btn-danger">Xóa</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+</div>
+</main>
+</body>
+</html>
